@@ -1,0 +1,419 @@
+<html>
+    <head>
+        <title>Hangman</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Rubik:400,500" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <script type="text/javascript" src="words.json"></script>
+        <script>
+            var menuIsOpen = false;
+            var wordCategory;
+            var word;
+            var guesses = [];
+            var solution;
+            var themeColor;
+            var keyColor = {
+                "correct": "rgb(66, 111, 211)",
+                "incorrect": "rgba(0, 0, 0, 0.25)"
+            }
+            var lives = 6;
+            var canGuess = true;
+            var correctGuesses = 0;
+            var wordsGuessed = 0;
+            var score = 0;
+            var highScore = localStorage.getItem('highScore');
+            var twoPlayer = false;
+            var player = 0;
+            var playerOneScore = 0;
+            var playerTwoScore = 0;
+            function wordSolution() {
+                word = word.toUpperCase();
+                word = word.replace(/^\s+|\s+$/g, '');
+                solution = word.split('').filter(function(str) {return /\S/.test(str);});
+                solution = solution.filter(noDuplicates);
+                showBlanks();
+            }
+            function newWord() {
+                $.getJSON("words.json", function(data) {
+                    var list = JSON.parse(data);
+                });
+                wordCategory = Object.keys(list.category)[Math.floor(Math.random() * Object.keys(list.category).length)];
+                word = list.category[wordCategory][Math.floor(Math.random() * list.category[wordCategory].length)];
+                wordSolution();
+            }
+            function noDuplicates(value, index, self) {
+                return self.indexOf(value) == index;
+            }
+            function showBlanks(mode) {
+                var spaces = "";
+                var blank;
+                for (var x = 0; x < word.length; x++) {
+                    if (mode == "all") {
+                        if (word[x] == " ") {
+                            blank = '&nbsp;';
+                        } else {
+                            blank = word[x];
+                        }
+                    } else if ($.inArray(word[x], guesses) != -1) {
+                        blank = word[x];
+                    } else if (word[x] == " ") {
+                        blank = " ";
+                    } else {
+                        blank = "_";
+                    }
+                    spaces += blank;
+                    $('#game-blanks').html(spaces);
+                }
+            }
+            function letterPressed(x) {
+                if (canGuess == true) {
+                    $('#' + x).prop('disabled', true);
+                    if ($.inArray(x, solution) != -1) {
+                        $('#' + x).css({"animation-name": "button-green", "animation-duration": "0.5s", "animation-play-state": "running", "background-color": keyColor.correct, "color": "#ffffff"});
+                        guesses.push(x);
+                        correctGuesses = correctGuesses + 1;
+                        showBlanks(x);
+                        if (guesses.sort().join(',') == solution.sort().join(',') && lives > 0) {
+                            gameWon();
+                        }
+                    } else {
+                        $('#' + x).css({"animation-name": "button-red", "animation-duration": "0.5s", "animation-play-state": "running", "background-color": keyColor.incorrect, "color": "#505050"});
+                        lives = lives - 1;
+                        $("#game-heart" + lives).css({"opacity": "0", "transform": "translateY(40px)"});
+                        if (lives <= 2) {
+                            $("#game-word-skip").css({"color": "#33333340", "cursor": "default"});
+                        } else {
+                            $("#game-word-skip").css({"color": "#333333", "cursor": "pointer"});
+                        }
+                        if (lives == 0) {
+                            gameLoss(true);
+                        }
+                    }
+                }
+            }
+            function gameReset(livesReset) {
+                guesses = [];
+                if (livesReset == true) {
+                    lives = 6;
+                } else if (livesReset == false) {
+                    lives = lives;
+                }
+                canGuess = true;
+                correctGuesses = 0;
+                if (twoPlayer == false) {
+                    $('#game-player-turn').css({"display": "none"});
+                    $('#game-info-two-player').css({"display": "none"});
+                    $('#game-category').css({"font-size": "1.75rem"});
+                    newWord();
+                    $('#game-category').html("THE CATEGORY IS ");
+                    $('.game-buttons:disabled').prop('disabled', false);
+                    $('.game-buttons').css({"animation-name": "none", "background-color": "#ffffff", "color": "#333333"});
+                    $('#game-blanks').css({"animation-name": "none", "background-color": "", "color": "#333333"});
+                    newCategory(true);
+                } else if (twoPlayer == true) {
+                    $('#game-player-turn').css({"display": "block"});
+                    $('#game-info-two-player').css({"display": "block"});
+                    $('#game-category').css({"font-size": "1.5rem"});
+                    wordSolution();
+                    $('#game-category').html("Hint:  ");
+                    $('.game-buttons:disabled').prop('disabled', false);
+                    $('.game-buttons').css({"animation-name": "none", "background-color": "#ffffff", "color": "#333333"});
+                    $('#game-blanks').css({"animation-name": "none", "background-color": "", "color": "#333333"});
+                    newCategory(true);
+                }
+                $(".game-hearts").css({"opacity": "1", "transform": "translateY(0)"});
+                if (lives <= 2) {
+                    $("#game-word-skip").css({"color": "#33333340", "cursor": "default"});
+                } else {
+                    $("#game-word-skip").css({"color": "#333333", "cursor": "pointer"});
+                }
+            }
+            function gameWon() {
+                if (twoPlayer == true) {
+                    if (player == 1) {
+                        playerOneScore = playerOneScore + 1;
+                        $('#player-one-score').html("Player One: " + playerOneScore);
+                    } else if (player == 2) {
+                        playerTwoScore = playerTwoScore + 1;
+                        $('#player-two-score').html("Player Two: " + playerTwoScore);
+                    }
+                }
+                score = score + correctGuesses;
+                wordsGuessed = wordsGuessed + 1;
+                $('#game-score').html("SCORE: " + score);
+                $('#game-words-guessed').html("WORDS GUESSED: " + wordsGuessed);
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('highScore', highScore);
+                    $('#game-highscore').html("BEST: " + highScore);
+                }
+                $('.game-buttons:enabled').css({"background-color": keyColor.incorrect, "color": "#505050"});
+                $('.game-buttons:enabled').prop('disabled', true);
+                canGuess = false;
+                setTimeout(function() {
+                    $('#game-blanks').css({"animation-name": "solution-green", "animation-duration": "0.25s", "animation-play-state": "running", "background-color": keyColor.correct, "color": "white"});
+                }, 100);
+                setTimeout(function() {
+                    gameReset(true);
+                    $('#game-blanks').css({"animation-name": "slideOut", "animation-duration": "0.25s", "animation-play-state": "running"});
+                }, 600);
+                setTimeout(function() {
+                    $('#game-blanks').css({"animation-name": "none", "animation-play-state": "paused"});
+                    $('#game-blanks').css({"animation-name": "slideIn", "animation-duration": "0.25s", "animation-play-state": "running"});
+                }, 800);
+                setTimeout(function() {
+                    $('#game-blanks').css({"animation-play-state": "paused"});
+                    if (twoPlayer == true) {
+                        switchPlayer();
+                    }
+                }, 800);
+            }
+            function gameLoss(showAnswer) {
+                $('.game-buttons:enabled').css({"background-color": keyColor.incorrect, "color": "#505050"});
+                $('.game-buttons:enabled').prop('disabled', true);
+                canGuess = false;
+                if (showAnswer == false) {
+                    gameReset(true);
+                    score = 0;
+                    wordsGuessed = 0;
+                    $('#game-score').html("SCORE: " + score);
+                    $('#game-words-guessed').html("WORDS GUESSED: " + wordsGuessed);
+                } else if (showAnswer == true) {
+                    showBlanks("all");
+                    setTimeout(function() {
+                    }, 100);
+                    setTimeout(function() {
+                        gameReset(true);
+                        score = 0;
+                        wordsGuessed = 0;
+                        $('#game-score').html("SCORE: " + score);
+                        $('#game-words-guessed').html("WORDS GUESSED: " + wordsGuessed);
+                    }, 800);
+                }
+                setTimeout(function() {
+                    if (twoPlayer == true) {
+                        switchPlayer();
+                    }
+                }, 800);
+            }
+            function newCategory(category) {
+                if (category == true) {
+                    $('#game-category').html($('#game-category').text() + wordCategory.bold().toUpperCase());
+                    if (twoPlayer == true && wordCategory == "") {
+                        $('#game-category').html("Guess the other player's word");
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body onload="gameReset(true)">
+        <main>
+            <div id="game-info-nav">
+                <div id="icon-container">
+                    <div id="game-info-nav-left" class="game-score-holder">
+                        <div id="game-score">SCORE: 0</div>
+                        <!--<div id="game-highscore">&nbsp;&nbsp;&nbsp;Best: 0</div>-->
+                        <div id="player-one-score">PLAYER ONE: 0</div>
+                    </div>
+                    <div id="game-info-nav-right">
+                        <div id="game-words-guessed" class="game-score-holder">WORDS GUESSED: 0</div>
+                        <div id="player-two-score" class="game-score-holder">PLAYER TWO: 0</div>
+                        <div id="menu-button"><i class="material-icons">group</i><span>TWO PLAYER</span></div>
+                    </div>
+                </div>
+                <div id="menu-dropdown">
+                    <div id="one-player-start" class="dropdown-item">PLAY SINGLEPLAYER</div>
+                    <div id="two-player-start" class="dropdown-item">PLAY TWO-PLAYER MODE</div>
+                </div>
+            </div>
+            <div id="game-holder">
+                <div id="overlay"></div>
+                <div id="game-holder-top">
+                    <script>
+                        $("#menu-button").click(function() {
+                            if (twoPlayer == true) {
+                                playerOneStart();
+                                menuIsOpen = true;
+                            } else {
+                                playerTwoStart();
+                                menuIsOpen = false;
+                            }
+                        });
+                        $(".dropdown-item").click(function() {
+                            $("#menu-dropdown").css({"display": "none"});
+                            menuIsOpen = false;
+                        });
+                        function playerOneStart() {
+                            $("#menu-button").html("<i class='material-icons'>group</i><span>TWO PLAYER</span>");
+                            getInput("undefined");
+                            player = 0;
+                            twoPlayer = false;
+                            gameLoss(false);
+                            $("#game-score").css({"display": "block"});
+                            $("#game-highscore").css({"display": "block"});
+                            $("#game-words-guessed").css({"display": "block"});
+                            $("#player-one-score").css({"display": "none"});
+                            $("#player-two-score").css({"display": "none"});
+                            $("#game-category").css({"display": "block"});
+                            $("#game-canvas").css({"display": "inline"});
+                            $("#game-holder-bottom").css({"display": "flex"});
+                        }
+                        function playerTwoStart() {
+                            player = 1;
+                            $("#menu-button").html("<i class='material-icons'>person</i><span>SINGLE PLAYER</span>");
+                            twoPlayer = true;
+                            switchPlayer(true);
+                            player = 1;
+                            $("#game-score").css({"display": "none"});
+                            $("#game-highscore").css({"display": "none"});
+                            $("#game-words-guessed").css({"display": "none"});
+                            $("#player-one-score").css({"display": "block"});
+                            $("#player-two-score").css({"display": "block"});
+                        }
+                        function switchPlayer(category) {
+                            if (category == "") {category = true;}
+                            if (player == 1) {
+                                player = 2;
+                                $("#form-holder-player-text").html("PLAYER ONE IS CHOOSING THE WORD");
+                                $("#game-player-turn").html("PLAYER TWO IS GUESSING");
+                            } else if (player == 2) {
+                                player = 1;
+                                $("#form-holder-player-text").html("PLAYER TWO IS CHOOSING THE WORD");
+                                $("#game-player-turn").html("PLAYER ONE IS GUESSING");
+                            }
+                            $("#game-holder-top").css({"display": "none"});
+                            $("#input-holder").css({"display": "flex"});
+                            $("#game-holder-bottom").css({"display": "none"});
+                            canGuess = false;
+                            newCategory(category);
+                        }
+                    </script>
+                    <div id="game-info-holder">
+                        <div id="game-info-top">
+                            <div id="game-info-two-player">
+                                <div id="game-player-turn">Player One is Guessing</div>
+                            </div>
+                            <div id="game-category">THE CATEGORY IS <b>HISTORICAL FIGURES</b></div>
+                            <!--<div id="game-timer">0:60</div>-->
+                        </div>
+                        <div id="game-info-bottom">
+                            <div id="game-health">
+                                <i class="material-icons game-hearts" id="game-heart0">favorite</i>
+                                <i class="material-icons game-hearts" id="game-heart1">favorite</i>
+                                <i class="material-icons game-hearts" id="game-heart2">favorite</i>
+                                <i class="material-icons game-hearts" id="game-heart3">favorite</i>
+                                <i class="material-icons game-hearts" id="game-heart4">favorite</i>
+                                <i class="material-icons game-hearts" id="game-heart5">favorite</i>
+                            </div>
+                            <div id="game-word-skip">
+                                <span>SKIP WORD</span><i class="material-icons">play_arrow</i>
+                            </div>
+                            <script>
+                                $("#game-word-skip").click(function() {
+                                    if (lives > 2) {
+                                        if (twoPlayer == true) {
+                                            if (player == 1) {
+                                                lives = lives - 2;
+                                                playerTwoStart();
+                                            } else if (player == 2) {
+                                                lives = lives - 2;
+                                                playerOneStart();
+                                            }
+                                        } else {
+                                            lives = lives - 2;
+                                            gameReset(false);
+                                            for (i = 6; i >= lives; i--) {
+                                                $("#game-heart" + i).css({"opacity": "0", "transform": "translateY(40px)"});
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div id="canvas-holder">
+                        <canvas id="game-canvas" height="400"></canvas>
+                    </div>
+                </div>
+                <div id="input-holder">
+                    <div id="form-container">
+                        <div id="form-holder-top">
+                            <p id="form-holder-player-text">PLAYER ONE IS CHOOSING THE WORD</p>
+                        </div>
+                        <div id="form-holder-bottom">
+                            <p>Enter a word containing only letters and spaces</p>
+                            <p id="input-word-text">Word for the other player to guess</p>
+                            <input type="password" id="input-word" placeholder="APPLE" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required="">
+                            <p>Hint for the other player (Optional)</p>
+                            <input type="text" id="input-category" placeholder="FRUIT" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            <input type="submit" onclick="getInput($('#input-word').val())" value="CONFIRM">
+                            <script>
+                                function forceKeyPressUppercase(e) {
+                                    var charInput = e.keyCode;
+                                    if((charInput >= 97) && (charInput <= 122)) {
+                                        if(!e.ctrlKey && !e.metaKey && !e.altKEY) {
+                                            var newChar = charInput - 32;
+                                            var start = e.target.selectionStart;
+                                            var end = e.target.selectionEnd;
+                                            e.target.value = e.target.value.substring(0, start) + String.fromCharCode(newChar) + e.target.value.substring(end);
+                                            e.target.setSelectionRange(start + 1, start + 1);
+                                            e.preventDefault();
+                                        }
+                                    }
+                                 }
+
+                                document.getElementById("input-category").addEventListener("keypress", forceKeyPressUppercase, false);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function getInput(input) {
+                        if (/^(?=.*[a-zA-Z])[a-zA-Z\s]*$/.test(input)) {
+                            formReset();
+                        } else {
+                            $("#input-word").css({"background": "#ff373780", "transition": "0s ease-out"});
+                            setTimeout(function() {
+                                $("#input-word").css({"background": "#ffffff20", "transition": "0.2s ease-out"});
+                            }, 200);
+                        }
+                    }
+                    function formReset() {
+                        word = $("#input-word").val();
+                        wordCategory = $("#input-category").val();
+                        $("#input-word").val("");
+                        $("#input-category").val("");
+                        gameReset(false);
+                        for (i = 6; i >= lives; i--) {
+                            $("#game-heart" + i).css({"opacity": "0", "transform": "translateY(40px)"});
+                        }
+                        $("#game-holder-top").css({"display": "flex"});
+                        $("#input-holder").css({"display": "none"});
+                        $("#game-holder-bottom").css({"display": "flex"});
+                        canGuess = true;
+                        $("#input-word").css({"animation-name": ""});
+                    }
+                </script>
+                <div id="game-holder-bottom">
+                    <div>
+                        <div id="game-blanks"></div>
+                    </div>
+                    <div id="game-keyboard">
+                        <script>
+                            var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                            for (var x = 0; x < 26; x++) {
+                                $("#game-keyboard").append("<button type='button' class='game-buttons' id='" + letters[x] +"' onclick='letterPressed(\"" + letters[x] + "\")'>" + letters[x] + "</button>\n");
+                                if (letters[x] == "M") {
+                                    $("#game-keyboard").append("<div></div>");
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
