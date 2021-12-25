@@ -1,0 +1,374 @@
+:root {
+    --correct-color: #508aa7;
+    --incorrect-color: #f44336;
+}
+
+html {
+    height: 100%;
+    font-size: 16px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: #f5f5f5;
+    color: #333333;
+    margin: 0px;
+    text-align: center;
+    font-family: 'Rubik', arial, sans-serif;
+    height: 100%;
+    user-select: none;
+}
+
+b {
+    font-weight: 500;
+}
+
+.span-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 1rem;
+}
+
+#score-bar {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex: none;
+    justify-content: space-between;
+    padding: 0px 4%;
+    font-size: 1.15rem;
+    font-weight: 500;
+    height: 58px;
+    z-index: 2;
+}
+
+#score-bar-left, #score-bar-right {
+    display: flex;
+    flex-direction: row;
+}
+
+.button {
+    flex: none;
+    margin: 8px auto 8px auto;
+    padding: 0 12px;
+    min-height: 42px;
+    max-height: 42px;
+    width: fit-content;
+    background-color: #f24c4c;
+    font-size: 1.15rem;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.button > i {
+    padding: 7px 0;
+    font-size: 28px;
+}
+
+.button > span {
+    vertical-align: super;
+    padding-left: 6px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+#pvp-button {
+    margin-left: 12px;
+}
+
+.score-container {
+    padding: 10px 18px;
+    margin: 8px 0px;
+    background-color: #ffffff20;
+    border-radius: 8px;
+    border: 1px solid #333;
+    white-space: nowrap;
+}
+
+#content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+#content-top, #content-bottom {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+#info-container {
+    align-self: center;
+    flex-direction: column;
+    display: flex;
+    min-width: fit-content;
+    width: 50vw;
+    margin-top: 1rem;
+}
+
+#banner {
+    display: flex;
+    flex-direction: column;
+    height: 6.5rem;
+    width: 100%;
+    margin: 0.75rem;
+    font-size: 1.5rem;
+    background-color: #dadada;
+    border-radius: 8px;
+    color: #333333;
+    align-self: center;
+    justify-content: center;
+}
+
+#health-row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+#health {
+    margin-left: -3px;
+}
+
+.hearts {
+    font-size: 30px;
+    color: #f34c4c;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.125);
+    transition: 0.2s ease;
+}
+
+.heart-fallen {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+#word-skip-button {
+    margin-right: -12px;
+    background: none;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+    color: #808080;
+    cursor: pointer;
+    border: none;
+}
+
+#word-skip-button:focus {
+    outline: none;
+}
+
+#word-skip-button:disabled {
+    color: #80808040;
+    cursor: default;
+}
+
+#word-skip-button > i {
+    vertical-align: top;
+    font-size: 28px;
+}
+
+#info-two-player, #player-one-score, #player-two-score {
+    display: none;
+}
+
+#category {
+    font-size: 1.5rem;
+}
+
+#player-turn-text {
+    display: none;
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 8px;
+}
+
+#input-container {
+    display: none;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    margin: 24px;
+    z-index: 1;
+    height: 100%;
+}
+
+#input-container > p {
+    text-align: left;
+}
+
+#form-container {
+    display: flex;
+    flex-direction: column;
+    padding: 36px 32px;
+    background: white;
+    box-shadow: 0px 2px 8px 0px #00000060;
+    border-radius: 8px;
+}
+
+#form-container > p {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.form {
+    height: 42px;
+    width: calc(100% - 24px);
+    margin: 12px 0px;
+    background: #f5f5f5;
+    padding: 0 12px;
+    color: #333333d0;
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 8px;
+}
+
+::placeholder {
+    font-weight: 400;
+    font-family: 'Rubik', arial, sans-serif;
+}
+
+#form-container-bottom > input[type=submit] {
+    height: 42px;
+    width: auto;
+    margin-top: 1.75rem;
+    padding: 0px 16px;
+    background-color: #f14c4c;
+    color: #ffffff;
+    font-size: 1.15rem;
+    align-self: center;
+    border-radius: 4px;
+    box-shadow: 0px 2px 8px 0px #00000060;
+    cursor: pointer;
+    font-family: 'Rubik', arial, sans-serif;
+    font-weight: 500;
+}
+
+#input-word {
+    -webkit-text-security: disc;
+    -moz-text-security: disc;
+}
+
+#keyboard {
+    padding: 8px 0;
+    background-color: #dadada;
+    text-align: center;
+    width: 100%;
+}
+
+#keyboard > form {
+    padding: 1% 0px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#word-holder {
+    margin: 2rem 0px;
+    color: #333333;
+    font-size: 3rem;
+    font-weight: 500;
+    letter-spacing: 8px;
+}
+
+#word {
+    display: inline-block;
+    padding: 0px 12px 0 20px;
+    border-radius: 10px;
+    transition: 0.2s ease
+}
+
+.solution-win {
+    background-color: var(--correct-color);
+    color: #ffffff;
+}
+
+.solution-loss {
+    background-color: var(--incorrect-color);
+    color: #ffffff;
+}
+
+.key-container {
+    display: inline-block;
+    margin: 0.4%;
+    height: 11vw;
+    max-height: 70px;
+    width: 6vw;
+    max-width: 45px;
+}
+
+.keys {
+    height: 100%;
+    width: 100%;
+    background: #ffffff;
+    color: #333333;
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: 'Rubik', arial, sans-serif;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.125);
+    cursor: pointer;
+    visibility: visible;
+    transition: 0.5s ease;
+}
+
+.keys:disabled {
+    cursor: default;
+}
+
+.key-correct {
+    background: var(--correct-color);
+    color: #ffffff;
+}
+
+.key-incorrect {
+    background: rgba(0, 0, 0, 0.25);
+    color: #505050;
+}
+
+@media only screen and (max-width: 720px) {
+    .keys {
+        font-size: 5vw;
+    }
+}
+
+@media only screen and (max-width: 512px) {
+    #category {
+        font-size: 1.25rem;
+    }
+
+    .heart {
+        font-size: 26px;
+    }
+
+    #word-skip-button {
+        font-size: 22px;
+    }
+
+    #blanks {
+        font-size: 2.25rem;
+    }
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+    input {
+        -webkit-appearance: none;
+    }
+}
