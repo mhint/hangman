@@ -3,6 +3,7 @@
     --theme-light: #fff;
     --theme-dark: #ddd;
     --theme-bg: #f5f5f5;
+    --theme-fonts: 'Rubik', arial, sans-serif;
     --text-light: #fff;
     --text-dark: #333;
     --text-disabled: #555;
@@ -22,7 +23,7 @@ body {
     color: var(--text-dark);
     margin: 0;
     text-align: center;
-    font-family: 'Rubik', arial, sans-serif;
+    font-family: var(--theme-fonts);
     height: 100%;
     user-select: none;
 }
@@ -58,8 +59,8 @@ b {
     width: fit-content;
     background: var(--theme-primary);
     font-size: 1.15rem;
-    font-family: 'Rubik', sans-serif;
     font-weight: 500;
+    font-family: var(--theme-fonts);
     color: var(--text-light);
     border-radius: 8px;
     border: none;
@@ -158,7 +159,7 @@ b {
     background: none;
     font-size: 22px;
     font-weight: 500;
-    font-family: 'Rubik', sans-serif;
+    font-family: var(--theme-fonts);
     color: var(--text-dark);
     cursor: pointer;
     border: none;
@@ -231,6 +232,7 @@ b {
     color: #333333d0;
     text-align: left;
     font-size: 1.25rem;
+    font-family: var(--theme-fonts);
     border: none;
     border-radius: 8px;
 }
@@ -244,7 +246,7 @@ b {
 
 ::placeholder {
     font-weight: 400;
-    font-family: 'Rubik', arial, sans-serif;
+    font-family: var(--theme-fonts);
 }
 
 #input-word {
@@ -300,7 +302,7 @@ b {
     color: var(--text-dark);
     text-align: center;
     font-size: 2.5rem;
-    font-family: 'Rubik', arial, sans-serif;
+    font-family: var(--theme-fonts);
     font-weight: 500;
     border: none;
     border-radius: 4px;
