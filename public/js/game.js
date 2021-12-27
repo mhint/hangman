@@ -1,7 +1,9 @@
-function Player(id) {
-    this.id = id
-    this.score = 0
-    this.wins = 0
+class Player {
+    constructor(id) {
+        this.id = id
+        this.score = 0
+        this.wins = 0
+    }
 }
 
 const Game = {
@@ -15,7 +17,7 @@ const Game = {
     currentWord: new Object,
     loadWords: async function() {
         const url = './json/words.json'
-        let json = await fetch(url).then(response => {
+        const json = await fetch(url).then(response => {
             return response.json()
         }).then(obj => {
             return obj
@@ -24,8 +26,7 @@ const Game = {
     },
     getLettersInSolution: function(word) {
         let solution = []
-        word = word.toLowerCase()
-        word = word.replace(/(.)(?=.*\1)|\s/g, '')
+        word = word.toLowerCase().replace(/(.)(?=.*\1)|\s/g, '')
         solution = word.split('').sort()
         return solution
     },
@@ -211,11 +212,11 @@ const Game = {
             $(`.keys`).prop("disabled", false).removeClass("key-correct").removeClass("key-incorrect")
         },
         resetLives: function () {
-            $('.hearts').removeClass("heart-fallen")
+            $('.hearts').removeClass("heart-lost")
             $('#word-skip-button').prop("disabled", false)
         },
         startGame: function() {
-            $("#pvp-button").html("<i class='material-icons'>group</i><span>1v1</span>")
+            $("#pvp-button").html("<i class='material-icons'>group</i><span>NEW 2P</span>")
             $("#score").css({"display": "block"})
             $('#score').html("SCORE: 0")
             $("#words-guessed").css({"display": "block"})
@@ -228,7 +229,7 @@ const Game = {
             $('#info-two-player').css({"display": "none"})
         },
         startGamePvP: function() {
-            $("#pvp-button").html("<i class='material-icons'>person</i><span>SOLO</span>")
+            $("#pvp-button").html("<i class='material-icons'>person</i><span>NEW 1P</span>")
             $("#score").css({"display": "none"})
             $("#words-guessed").css({"display": "none"})
             $("#player-one-score").css({"display": "block"})
@@ -240,10 +241,10 @@ const Game = {
             $('#category').html("Hint:  ")
         },
         updateLives: function(lives) {
-            let hearts = $('.hearts:not(.heart-fallen)').length
+            let hearts = $('.hearts:not(.heart-lost)').length
             if (lives < hearts) {
                 for (let i = hearts; i > lives; i--) {
-                    $(`#heart-${i}`).addClass("heart-fallen")
+                    $(`#heart-${i}`).addClass("heart-lost").removeClass("heart-flashing")
                 }
             }
             if (lives <= 2) {
@@ -273,7 +274,7 @@ const Game = {
         },
         updateWord: function(solution, guesses) {
             let displayWord = ''
-            for (var i = 0; i < solution.length; i++) {
+            for (let i = 0; i < solution.length; i++) {
                 let currentLetter = undefined
                 if ($.inArray(solution[i], guesses) != -1) {
                     currentLetter = solution[i].toUpperCase()
@@ -317,4 +318,14 @@ for (let i = 1; i <= Game.initialLives; i++) {
     const heart = `<i class="material-icons hearts" id="heart-${i}">favorite</i>`
     $("#health").append(heart)
 }
+$("#word-skip-button").on('mouseenter', function() {
+    if (Game.currentPlayerLives > 2) {
+        $(`#heart-${Game.currentPlayerLives}`).addClass("heart-flashing")
+        $(`#heart-${Game.currentPlayerLives - 1}`).addClass("heart-flashing")
+    }
+}).on('mouseleave', function(){
+    $(`#heart-${Game.currentPlayerLives}`).removeClass("heart-flashing")
+    $(`#heart-${Game.currentPlayerLives - 1}`).removeClass("heart-flashing")
+})
+
 Game.new()

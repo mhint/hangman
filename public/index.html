@@ -22,7 +22,7 @@
             <div id="score-bar-right">
                 <div id="words-guessed" class="score-container">WORDS GUESSED: 0</div>
                 <div id="player-two-score" class="score-container">PLAYER TWO: 0</div>
-                <div class="button" id="pvp-button" onclick="Game.togglePvP()"><i class="material-icons">group</i><span>1v1</span></div>
+                <div class="button" id="pvp-button" onclick="Game.togglePvP()"><i class="material-icons">group</i></div>
             </div>
         </div>
         <div id="content">
@@ -50,7 +50,7 @@
                     <input type="text" class="form" id="input-solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required="">
                     <p>Hint for the other player</p>
                     <input type="text" class="form" id="input-category" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                    <input type="submit" class="button" onclick="Game.getFormInput($('#input-word').val(), $('#input-category').val())" value="CONFIRM">
+                    <input id="form-submit" type="submit" class="button" onclick="Game.getFormInput($('#input-word').val(), $('#input-category').val())" value="CONFIRM">
                 </div>
             </div>
             <div id="content-bottom">

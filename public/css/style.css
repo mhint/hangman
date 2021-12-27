@@ -1,7 +1,7 @@
 :root {
     --theme-primary: #f24c4c;
-    --theme-light: #fff;
-    --theme-dark: #ddd;
+    --theme-light: #ddd;
+    --theme-dark: #888;
     --theme-bg: #f5f5f5;
     --theme-fonts: 'Rubik', arial, sans-serif;
     --text-light: #fff;
@@ -57,11 +57,11 @@ b {
     min-height: 42px;
     max-height: 42px;
     width: fit-content;
-    background: var(--theme-primary);
+    background: var(--theme-dark);
     font-size: 1.15rem;
     font-weight: 500;
     font-family: var(--theme-fonts);
-    color: var(--text-light);
+    color: #fff;
     border-radius: 8px;
     border: none;
     box-shadow: 0 2px 4px 0 #aaa;
@@ -78,7 +78,9 @@ b {
 }
 
 .button:hover {
+    background: var(--theme-primary);
     cursor: pointer;
+    transition: .2s ease;
 }
 
 #pvp-button {
@@ -125,7 +127,7 @@ b {
     width: 100%;
     margin: 0.75rem;
     font-size: 1.5rem;
-    background: var(--theme-dark);
+    background: var(--theme-light);
     border-radius: 8px;
     color: var(--text-dark);
     align-self: center;
@@ -140,18 +142,27 @@ b {
 
 #health {
     margin-left: -3px;
+    height: 34px;
 }
 
 .hearts {
     font-size: 30px;
-    color: #f34c4c;
+    color: var(--theme-primary);
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.125);
     transition: 0.2s ease;
 }
 
-.heart-fallen {
+.heart-flashing {
+    animation-name: "flash";
+    animation-duration: .75s;
+    animation-iteration-count: infinite;
+}
+
+.heart-lost {
+    margin: 15px;
+    font-size: 0;
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(-15px);
 }
 
 #word-skip-button {
@@ -211,7 +222,7 @@ b {
     display: flex;
     flex-direction: column;
     padding: 36px 32px;
-    background: var(--theme-light);
+    background: #fff;
     box-shadow: 0 2px 8px 0 #00000060;
     border-radius: 8px;
 }
@@ -254,9 +265,13 @@ b {
     -moz-text-security: disc;
 }
 
+#form-submit {
+    background: var(--theme-primary);
+}
+
 #keyboard {
     padding: 8px 0;
-    background: var(--theme-dark);
+    background: var(--theme-light);
     text-align: center;
     width: 100%;
 }
@@ -278,12 +293,12 @@ b {
 
 .solution-win {
     background: var(--correct-color);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .solution-loss {
     background: var(--incorrect-color);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .key-container {
@@ -298,7 +313,7 @@ b {
 .keys {
     height: 100%;
     width: 100%;
-    background: var(--theme-light);
+    background: #fff;
     color: var(--text-dark);
     text-align: center;
     font-size: 2.5rem;
@@ -318,12 +333,24 @@ b {
 
 .key-correct {
     background: var(--correct-color);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .key-incorrect {
     background: #aaa;
     color: #555;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 25%;
+    }
+    100% {
+        opacity: 100%;
+    }
 }
 
 @media only screen and (max-width: 720px) {
