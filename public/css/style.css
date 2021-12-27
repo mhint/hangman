@@ -20,7 +20,7 @@ body {
     flex-direction: column;
     background: var(--theme-bg);
     color: var(--text-dark);
-    margin: 0px;
+    margin: 0;
     text-align: center;
     font-family: 'Rubik', arial, sans-serif;
     height: 100%;
@@ -31,20 +31,13 @@ b {
     font-weight: 500;
 }
 
-.span-title {
-    font-size: 1.75rem;
-    font-weight: 500;
-    text-align: center;
-    margin: 1rem;
-}
-
 #score-bar {
     position: relative;
     display: flex;
     flex-direction: row;
     flex: none;
     justify-content: space-between;
-    padding: 0px 4%;
+    padding: 0 4%;
     font-size: 1.15rem;
     font-weight: 500;
     height: 58px;
@@ -93,7 +86,7 @@ b {
 
 .score-container {
     padding: 10px 18px;
-    margin: 8px 0px;
+    margin: 8px 0;
     background: var(--theme-bg);
     border-radius: 8px;
     border: 1px solid #333;
@@ -120,8 +113,7 @@ b {
     align-self: center;
     flex-direction: column;
     display: flex;
-    min-width: fit-content;
-    width: 50vw;
+    width: 480px;
     margin-top: 1rem;
 }
 
@@ -164,7 +156,7 @@ b {
 #word-skip-button {
     margin-right: -12px;
     background: none;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 500;
     font-family: 'Rubik', sans-serif;
     color: var(--text-dark);
@@ -196,8 +188,7 @@ b {
 
 #player-turn-text {
     display: none;
-    font-size: 2rem;
-    font-weight: 500;
+    font-size: 1.5rem;
     margin: 8px;
 }
 
@@ -220,7 +211,7 @@ b {
     flex-direction: column;
     padding: 36px 32px;
     background: var(--theme-light);
-    box-shadow: 0px 2px 8px 0px #00000060;
+    box-shadow: 0 2px 8px 0 #00000060;
     border-radius: 8px;
 }
 
@@ -229,21 +220,26 @@ b {
     margin-bottom: 0;
     text-align: left;
     font-size: 1.15rem;
-    font-weight: 500;
 }
 
 .form {
     height: 42px;
     width: calc(100% - 24px);
-    margin: 12px 0px;
+    margin: 12px 0;
     background: var(--theme-bg);
     padding: 0 12px;
     color: #333333d0;
     text-align: left;
-    font-weight: 500;
     font-size: 1.25rem;
     border: none;
     border-radius: 8px;
+}
+
+.form-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 1rem;
 }
 
 ::placeholder {
@@ -264,7 +260,7 @@ b {
 }
 
 #word-holder {
-    margin: 2rem 0px;
+    margin: 2rem 0;
     color: var(--text-dark);
     font-size: 3rem;
     font-weight: 500;
@@ -273,7 +269,7 @@ b {
 
 #word {
     display: inline-block;
-    padding: 0px 12px 0 20px;
+    padding: 0 12px 0 20px;
     border-radius: 10px;
     transition: 0.2s ease
 }
@@ -334,17 +330,17 @@ b {
     }
 }
 
-@media only screen and (max-width: 512px) {
+@media only screen and (max-width: 534px) {
+    #info-container {
+        width: 90%;
+    }
+
     #category {
         font-size: 1.25rem;
     }
 
     .heart {
         font-size: 26px;
-    }
-
-    #word-skip-button {
-        font-size: 22px;
     }
 
     #blanks {

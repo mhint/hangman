@@ -44,12 +44,12 @@
             </div>
             <div id="input-container">
                 <div id="form-container">
-                    <span class="span-title" id="form-container-player-text">Player 1 Guesses!</span>
-                    <p>Enter a word containing only letters and spaces</p>
-                    <p id="input-word-text">Word for the other player to guess</p>
-                    <input type="text" class="form" id="input-word" placeholder="Required" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required="">
+                    <span class="form-title" id="form-container-player-text">Enter a Word to Guess</span>
+                    <p id="form-description"><b>PLAYER 2</b>, choose a word for <b>PLAYER 1</b></p>
+                    <p>Solution must contain only letters and spaces</p>
+                    <input type="text" class="form" id="input-solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required="">
                     <p>Hint for the other player</p>
-                    <input type="text" class="form" id="input-category" placeholder="Optional" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <input type="text" class="form" id="input-category" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     <input type="submit" class="button" onclick="Game.getFormInput($('#input-word').val(), $('#input-category').val())" value="CONFIRM">
                 </div>
             </div>

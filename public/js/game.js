@@ -175,21 +175,27 @@ const Game = {
                 $('#category').html(`THE CATEGORY IS <b>${category.toUpperCase()}</b>`)
             } else {
                 if (category != "") {
-                    $('#category').html(`Hint: <b>${category.toUpperCase()}</b>`)
+                    $('#category').html(`Hint: <b>&ldquo;${category.toUpperCase()}&rdquo;</b>`)
                 } else {
                     $('#category').html("Guess the other player's word")
                 }
             }
         },
+        displayRandomPlaceholder: function() {
+            const examples = [["apple", "fruits"], ["cat", "pets"], ["Paris", "capital cities"], ["December", "months"], ["Easter", "holidays"]]
+            const randomExample = examples[Math.floor(Math.random() * examples.length)]
+            $("#input-solution").attr("placeholder", randomExample[0])
+            $("#input-category").attr("placeholder", randomExample[1])
+        },
         displaySolutionOnLoss: function(wordObj) {
-            this.revealWord(wordObj)
+            this.updateWord(wordObj.solution, wordObj.letters)
             $('#word').addClass('solution-loss')
             setTimeout(() => {
                 $('#word').removeClass('solution-loss')
             }, 1000)
         },
         displaySolutionOnWin: function(wordObj) {
-            this.revealWord(wordObj)
+            this.updateWord(wordObj.solution, wordObj.letters)
             $('#word').addClass('solution-win')
             setTimeout(() => {
                 $('#word').removeClass('solution-win')
@@ -207,9 +213,6 @@ const Game = {
         resetLives: function () {
             $('.hearts').removeClass("heart-fallen")
             $('#word-skip-button').prop("disabled", false)
-        },
-        revealWord: function(wordObj) {
-            this.updateWord(wordObj.solution, wordObj.letters)
         },
         startGame: function() {
             $("#pvp-button").html("<i class='material-icons'>group</i><span>1v1</span>")
@@ -261,11 +264,11 @@ const Game = {
         },
         updatePlayer: function(player) {
             if (player.id == 1) {
-                $("#form-container-player-text").html("Player 1 Guesses!")
-                $("#player-turn-text").html("Player 1 Guesses!")
+                $("#player-turn-text").html("<b>PLAYER ONE</b> IS GUESSING")
+                $("#form-description").html("<b>PLAYER TWO</b>, choose a word for <b>PLAYER ONE</b>")
             } else if (player.id == 2) {
-                $("#form-container-player-text").html("Player 2 Guesses!")
-                $("#player-turn-text").html("Player 2 Guesses!")
+                $("#player-turn-text").html("<b>PLAYER TWO</b> IS GUESSING")
+                $("#form-description").html("<b>PLAYER ONE</b>, choose a word for <b>PLAYER TWO</b>")
             }
         },
         updateWord: function(solution, guesses) {
@@ -287,18 +290,19 @@ const Game = {
             $("#content-top").css({"display": "none"})
             $("#input-container").css({"display": "flex"})
             $("#content-bottom").css({"display": "none"})
+            this.displayRandomPlaceholder()
         },
         hideForm: function() {
-            $("#input-word").val("")
+            $("#input-solution").val("")
             $("#input-category").val("")
             $("#content-top").css({"display": "flex"})
             $("#input-container").css({"display": "none"})
             $("#content-bottom").css({"display": "flex"})
         },
         flashInputField: function() {
-            $("#input-word").css({"background": "#f57c7b", "transition": "0s ease-out"})
+            $("#input-solution").css({"background": "#f57c7b", "transition": "0s ease-out"})
             setTimeout(() => {
-                $("#input-word").css({"background": "#f5f5f5", "transition": "0.2s ease-out"})
+                $("#input-solution").css({"background": "#f5f5f5", "transition": "0.2s ease-out"})
             }, 200)
         }
     }
