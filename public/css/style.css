@@ -1,4 +1,11 @@
 :root {
+    --theme-primary: #f24c4c;
+    --theme-light: #fff;
+    --theme-dark: #ddd;
+    --theme-bg: #f5f5f5;
+    --text-light: #fff;
+    --text-dark: #333;
+    --text-disabled: #555;
     --correct-color: #508aa7;
     --incorrect-color: #f44336;
 }
@@ -11,8 +18,8 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    background: #f5f5f5;
-    color: #333333;
+    background: var(--theme-bg);
+    color: var(--text-dark);
     margin: 0px;
     text-align: center;
     font-family: 'Rubik', arial, sans-serif;
@@ -56,14 +63,14 @@ b {
     min-height: 42px;
     max-height: 42px;
     width: fit-content;
-    background-color: #f24c4c;
+    background: var(--theme-primary);
     font-size: 1.15rem;
     font-family: 'Rubik', sans-serif;
     font-weight: 500;
-    color: white;
+    color: var(--text-light);
     border-radius: 8px;
     border: none;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 4px 0 #aaa;
 }
 
 .button > i {
@@ -87,7 +94,7 @@ b {
 .score-container {
     padding: 10px 18px;
     margin: 8px 0px;
-    background-color: #ffffff20;
+    background: var(--theme-bg);
     border-radius: 8px;
     border: 1px solid #333;
     white-space: nowrap;
@@ -125,9 +132,9 @@ b {
     width: 100%;
     margin: 0.75rem;
     font-size: 1.5rem;
-    background-color: #dadada;
+    background: var(--theme-dark);
     border-radius: 8px;
-    color: #333333;
+    color: var(--text-dark);
     align-self: center;
     justify-content: center;
 }
@@ -158,9 +165,9 @@ b {
     margin-right: -12px;
     background: none;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 500;
     font-family: 'Rubik', sans-serif;
-    color: #808080;
+    color: var(--text-dark);
     cursor: pointer;
     border: none;
 }
@@ -170,8 +177,8 @@ b {
 }
 
 #word-skip-button:disabled {
-    color: #80808040;
-    cursor: default;
+    color: var(--text-disabled);
+    cursor: not-allowed;
 }
 
 #word-skip-button > i {
@@ -212,7 +219,7 @@ b {
     display: flex;
     flex-direction: column;
     padding: 36px 32px;
-    background: white;
+    background: var(--theme-light);
     box-shadow: 0px 2px 8px 0px #00000060;
     border-radius: 8px;
 }
@@ -229,7 +236,7 @@ b {
     height: 42px;
     width: calc(100% - 24px);
     margin: 12px 0px;
-    background: #f5f5f5;
+    background: var(--theme-bg);
     padding: 0 12px;
     color: #333333d0;
     text-align: left;
@@ -244,22 +251,6 @@ b {
     font-family: 'Rubik', arial, sans-serif;
 }
 
-#form-container-bottom > input[type=submit] {
-    height: 42px;
-    width: auto;
-    margin-top: 1.75rem;
-    padding: 0px 16px;
-    background-color: #f14c4c;
-    color: #ffffff;
-    font-size: 1.15rem;
-    align-self: center;
-    border-radius: 4px;
-    box-shadow: 0px 2px 8px 0px #00000060;
-    cursor: pointer;
-    font-family: 'Rubik', arial, sans-serif;
-    font-weight: 500;
-}
-
 #input-word {
     -webkit-text-security: disc;
     -moz-text-security: disc;
@@ -267,20 +258,14 @@ b {
 
 #keyboard {
     padding: 8px 0;
-    background-color: #dadada;
+    background: var(--theme-dark);
     text-align: center;
     width: 100%;
 }
 
-#keyboard > form {
-    padding: 1% 0px;
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 #word-holder {
     margin: 2rem 0px;
-    color: #333333;
+    color: var(--text-dark);
     font-size: 3rem;
     font-weight: 500;
     letter-spacing: 8px;
@@ -294,13 +279,13 @@ b {
 }
 
 .solution-win {
-    background-color: var(--correct-color);
-    color: #ffffff;
+    background: var(--correct-color);
+    color: var(--text-light);
 }
 
 .solution-loss {
-    background-color: var(--incorrect-color);
-    color: #ffffff;
+    background: var(--incorrect-color);
+    color: var(--text-light);
 }
 
 .key-container {
@@ -315,8 +300,8 @@ b {
 .keys {
     height: 100%;
     width: 100%;
-    background: #ffffff;
-    color: #333333;
+    background: var(--theme-light);
+    color: var(--text-dark);
     text-align: center;
     font-size: 2.5rem;
     font-family: 'Rubik', arial, sans-serif;
@@ -335,12 +320,12 @@ b {
 
 .key-correct {
     background: var(--correct-color);
-    color: #ffffff;
+    color: var(--text-light);
 }
 
 .key-incorrect {
-    background: rgba(0, 0, 0, 0.25);
-    color: #505050;
+    background: #aaa;
+    color: #555;
 }
 
 @media only screen and (max-width: 720px) {

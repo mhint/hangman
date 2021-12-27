@@ -25,8 +25,7 @@ const Game = {
     getLettersInSolution: function(word) {
         let solution = []
         word = word.toLowerCase()
-        word = word.replace(/\s+/g, '')
-        word = word.replace(/(.)(?=.*\1)/g, '')
+        word = word.replace(/(.)(?=.*\1)|\s/g, '')
         solution = word.split('').sort()
         return solution
     },
@@ -127,7 +126,7 @@ const Game = {
         this.currentPlayer.score += this.currentPlayerLives
         this.currentPlayer.wins += 1
         this.UI.updateScore(this.currentPlayer, this.isPvP)
-        this.UI.displaySolutionOnWin(this.currentWord.solution)
+        this.UI.displaySolutionOnWin(this.currentWord)
         setTimeout(() => {
             reset()
         }, 1000)
@@ -136,7 +135,7 @@ const Game = {
         const reset = this.isPvP ? () => this.resetWordPvP() : () => this.resetWord()
         this.UI.disableAllKeys()
         this.currentPlayerCanGuess = false
-        this.UI.displaySolutionOnLoss(this.currentWord.solution)
+        this.UI.displaySolutionOnLoss(this.currentWord)
         setTimeout(() => {
             reset()
         }, 1000)
@@ -182,15 +181,15 @@ const Game = {
                 }
             }
         },
-        displaySolutionOnLoss: function(word) {
-            this.revealWord(word)
+        displaySolutionOnLoss: function(wordObj) {
+            this.revealWord(wordObj)
             $('#word').addClass('solution-loss')
             setTimeout(() => {
                 $('#word').removeClass('solution-loss')
             }, 1000)
         },
-        displaySolutionOnWin: function(word) {
-            this.revealWord(word)
+        displaySolutionOnWin: function(wordObj) {
+            this.revealWord(wordObj)
             $('#word').addClass('solution-win')
             setTimeout(() => {
                 $('#word').removeClass('solution-win')
@@ -209,19 +208,8 @@ const Game = {
             $('.hearts').removeClass("heart-fallen")
             $('#word-skip-button').prop("disabled", false)
         },
-        revealWord: function(word) {
-            let displayWord = ''
-            for (var i = 0; i < word.length; i++) {
-                let currentLetter = undefined
-                if (word[i] != ' ') {
-                    currentLetter = word[i].toUpperCase()
-                } else {
-                    currentLetter = '&nbsp;'
-                }
-                displayWord += currentLetter
-            }
-            $("#word").html(displayWord)
-            setTimeout(function() {}, 800)
+        revealWord: function(wordObj) {
+            this.updateWord(wordObj.solution, wordObj.letters)
         },
         startGame: function() {
             $("#pvp-button").html("<i class='material-icons'>group</i><span>1v1</span>")
@@ -280,13 +268,13 @@ const Game = {
                 $("#player-turn-text").html("Player 2 Guesses!")
             }
         },
-        updateWord: function(word, guesses) {
+        updateWord: function(solution, guesses) {
             let displayWord = ''
-            for (var i = 0; i < word.length; i++) {
+            for (var i = 0; i < solution.length; i++) {
                 let currentLetter = undefined
-                if ($.inArray(word[i], guesses) != -1) {
-                    currentLetter = word[i].toUpperCase()
-                } else if (word[i] == ' ') {
+                if ($.inArray(solution[i], guesses) != -1) {
+                    currentLetter = solution[i].toUpperCase()
+                } else if (solution[i] == ' ') {
                     currentLetter = ' '
                 } else {
                     currentLetter = '_'
