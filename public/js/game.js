@@ -16,7 +16,7 @@ const Game = {
     currentPlayerLives: this.initialLives,
     currentWord: new Object,
     loadWords: async function() {
-        const url = './json/words.json'
+        const url = "./json/words.json"
         const json = await fetch(url).then(response => {
             return response.json()
         }).then(obj => {
@@ -26,8 +26,8 @@ const Game = {
     },
     getLettersInSolution: function(word) {
         let solution = []
-        word = word.toLowerCase().replace(/(.)(?=.*\1)|\s/g, '')
-        solution = word.split('').sort()
+        word = word.toLowerCase().replace(/(.)(?=.*\1)|\s/g, "")
+        solution = word.split("").sort()
         return solution
     },
     getFormInput: function(word, category) {
@@ -173,33 +173,33 @@ const Game = {
         },
         displayCategory: function(category, isPvP) {
             if (!isPvP) {
-                $('#category').html(`THE CATEGORY IS <b>${category.toUpperCase()}</b>`)
+                $("#category").html(`THE CATEGORY IS <b>${category.toUpperCase()}</b>`)
             } else {
                 if (category != "") {
-                    $('#category').html(`Hint: <b>&ldquo;${category.toUpperCase()}&rdquo;</b>`)
+                    $("#category").html(`Hint: <b>&ldquo;${category.toUpperCase()}&rdquo;</b>`)
                 } else {
-                    $('#category').html("Guess the other player's word")
+                    $("#category").html("Guess the other player's word")
                 }
             }
         },
         displayRandomPlaceholder: function() {
-            const examples = [["apple", "fruits"], ["cat", "pets"], ["Paris", "capital cities"], ["December", "months"], ["Easter", "holidays"]]
+            const examples = [["apple", "fruits"], ["cat", "pets"], ["green", "colors"], ["July", "months"], ["Halloween", "holidays"]]
             const randomExample = examples[Math.floor(Math.random() * examples.length)]
             $("#input-solution").attr("placeholder", randomExample[0])
             $("#input-category").attr("placeholder", randomExample[1])
         },
         displaySolutionOnLoss: function(wordObj) {
             this.updateWord(wordObj.solution, wordObj.letters)
-            $('#word').addClass('solution-loss')
+            $("#word").addClass("solution-loss")
             setTimeout(() => {
-                $('#word').removeClass('solution-loss')
+                $("#word").removeClass("solution-loss")
             }, 1000)
         },
         displaySolutionOnWin: function(wordObj) {
             this.updateWord(wordObj.solution, wordObj.letters)
-            $('#word').addClass('solution-win')
+            $("#word").addClass("solution-win")
             setTimeout(() => {
-                $('#word').removeClass('solution-win')
+                $("#word").removeClass("solution-win")
             }, 1000)
         },
         keyIsCorrect: function(key) {
@@ -212,54 +212,55 @@ const Game = {
             $(`.keys`).prop("disabled", false).removeClass("key-correct").removeClass("key-incorrect")
         },
         resetLives: function () {
-            $('.hearts').removeClass("heart-lost")
-            $('#word-skip-button').prop("disabled", false)
+            $(".hearts").removeClass("heart-lost")
+            $("#skip-button").prop("disabled", false)
         },
         startGame: function() {
-            $("#pvp-button").html("<i class='material-icons'>group</i><span>NEW 2P</span>")
+            $("#pvp-button").html("<i class='material-icons'>people_alt</i><span>NEW 2P</span>")
             $("#score").css({"display": "block"})
-            $('#score').html("SCORE: 0")
+            $("#score").html("SCORE: 0")
             $("#words-guessed").css({"display": "block"})
-            $('#words-guessed').html("WORDS GUESSED: 0")
+            $("#words-guessed").html("WORDS GUESSED: 0")
             $("#player-one-score").css({"display": "none"})
             $("#player-two-score").css({"display": "none"})
             $("#category").css({"display": "block"})
             $("#content-bottom").css({"display": "flex"})
-            $('#player-turn-text').css({"display": "none"})
-            $('#info-two-player').css({"display": "none"})
+            $("#player-turn-text").css({"display": "none"})
+            $("#info-two-player").css({"display": "none"})
         },
         startGamePvP: function() {
             $("#pvp-button").html("<i class='material-icons'>person</i><span>NEW 1P</span>")
             $("#score").css({"display": "none"})
             $("#words-guessed").css({"display": "none"})
             $("#player-one-score").css({"display": "block"})
-            $('#player-one-score').html("PLAYER ONE: 0")
+            $("#player-one-score").html("PLAYER ONE: 0")
             $("#player-two-score").css({"display": "block"})
-            $('#player-two-score').html("PLAYER TWO: 0")
-            $('#player-turn-text').css({"display": "block"})
-            $('#info-two-player').css({"display": "block"})
-            $('#category').html("Hint:  ")
+            $("#player-two-score").html("PLAYER TWO: 0")
+            $("#player-turn-text").css({"display": "block"})
+            $("#info-two-player").css({"display": "block"})
+            $("#category").html("Hint:  ")
         },
         updateLives: function(lives) {
-            let hearts = $('.hearts:not(.heart-lost)').length
+            let hearts = $(".hearts:not(.heart-lost)").length
             if (lives < hearts) {
                 for (let i = hearts; i > lives; i--) {
                     $(`#heart-${i}`).addClass("heart-lost").removeClass("heart-flashing")
                 }
             }
             if (lives <= 2) {
-                $('#word-skip-button').prop("disabled", true)
+                $("#skip-button").prop("disabled", true)
             }
+            $("#skip-button-text").html(`<span>SKIP (${Math.floor(lives - 2) / 2})`)
         },
         updateScore: function(player, isPvP) {
             if (!isPvP) {
-                $('#score').html("SCORE: " + player.score)
-                $('#words-guessed').html("WORDS GUESSED: " + player.wins)
+                $("#score").html("SCORE: " + player.score)
+                $("#words-guessed").html("WORDS GUESSED: " + player.wins)
             } else {
                 if (player.id == 1) {
-                    $('#player-one-score').html("PLAYER ONE: " + player.score)
+                    $("#player-one-score").html("PLAYER ONE: " + player.score)
                 } else if (player.id == 2) {
-                    $('#player-two-score').html("PLAYER TWO: " + player.score)
+                    $("#player-two-score").html("PLAYER TWO: " + player.score)
                 }
             }
         },
@@ -273,15 +274,15 @@ const Game = {
             }
         },
         updateWord: function(solution, guesses) {
-            let displayWord = ''
+            let displayWord = ""
             for (let i = 0; i < solution.length; i++) {
                 let currentLetter = undefined
                 if ($.inArray(solution[i], guesses) != -1) {
                     currentLetter = solution[i].toUpperCase()
-                } else if (solution[i] == ' ') {
-                    currentLetter = ' '
+                } else if (solution[i] == " ") {
+                    currentLetter = " "
                 } else {
-                    currentLetter = '_'
+                    currentLetter = "_"
                 }
                 displayWord += currentLetter
             }
@@ -301,7 +302,7 @@ const Game = {
             $("#content-bottom").css({"display": "flex"})
         },
         flashInputField: function() {
-            $("#input-solution").css({"background": "#f57c7b", "transition": "0s ease-out"})
+            $("#input-solution").css({"background": "var(--theme-secondary)", "transition": "0s ease-out"})
             setTimeout(() => {
                 $("#input-solution").css({"background": "#f5f5f5", "transition": "0.2s ease-out"})
             }, 200)
@@ -318,12 +319,12 @@ for (let i = 1; i <= Game.initialLives; i++) {
     const heart = `<i class="material-icons hearts" id="heart-${i}">favorite</i>`
     $("#health").append(heart)
 }
-$("#word-skip-button").on('mouseenter', function() {
+$("#skip-button").on("mouseenter", function() {
     if (Game.currentPlayerLives > 2) {
         $(`#heart-${Game.currentPlayerLives}`).addClass("heart-flashing")
         $(`#heart-${Game.currentPlayerLives - 1}`).addClass("heart-flashing")
     }
-}).on('mouseleave', function(){
+}).on("mouseleave", function(){
     $(`#heart-${Game.currentPlayerLives}`).removeClass("heart-flashing")
     $(`#heart-${Game.currentPlayerLives - 1}`).removeClass("heart-flashing")
 })

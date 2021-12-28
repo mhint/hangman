@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Inter:wght@400;600&display=swap');
+
 :root {
     --theme-primary: #f24c4c;
-    --theme-light: #ddd;
+    --theme-secondary: #ff7a7a;
+    --theme-light: #e5e5e5;
     --theme-dark: #888;
     --theme-bg: #f5f5f5;
-    --theme-fonts: 'Rubik', arial, sans-serif;
+    --theme-fonts: 'Inter', arial, sans-serif;
     --text-light: #fff;
     --text-dark: #333;
-    --text-disabled: #555;
+    --text-medium-dark: #666;
     --correct-color: #508aa7;
     --incorrect-color: #f44336;
 }
@@ -28,10 +31,6 @@ body {
     user-select: none;
 }
 
-b {
-    font-weight: 500;
-}
-
 #score-bar {
     position: relative;
     display: flex;
@@ -39,9 +38,11 @@ b {
     flex: none;
     justify-content: space-between;
     padding: 0 4%;
-    font-size: 1.15rem;
-    font-weight: 500;
     height: 58px;
+    background: #fff;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--theme-light);
     z-index: 2;
 }
 
@@ -59,7 +60,7 @@ b {
     width: fit-content;
     background: var(--theme-dark);
     font-size: 1.15rem;
-    font-weight: 500;
+    font-weight: 600;
     font-family: var(--theme-fonts);
     color: #fff;
     border-radius: 8px;
@@ -90,9 +91,6 @@ b {
 .score-container {
     padding: 10px 18px;
     margin: 8px 0;
-    background: var(--theme-bg);
-    border-radius: 8px;
-    border: 1px solid #333;
     white-space: nowrap;
 }
 
@@ -117,7 +115,7 @@ b {
     flex-direction: column;
     display: flex;
     width: 480px;
-    margin-top: 1rem;
+    margin-top: 2.5rem;
 }
 
 #banner {
@@ -125,13 +123,24 @@ b {
     flex-direction: column;
     height: 6.5rem;
     width: 100%;
-    margin: 0.75rem;
-    font-size: 1.5rem;
+    margin: 1rem;
     background: var(--theme-light);
     border-radius: 8px;
-    color: var(--text-dark);
     align-self: center;
     justify-content: center;
+}
+
+#banner-text-container {
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    font-size: 1.666rem;
+    font-weight: 500;
+    color: var(--text-medium-dark);
+}
+
+#banner b {
+    font-weight: 600;
+    color: var(--text-dark);
 }
 
 #health-row {
@@ -146,9 +155,8 @@ b {
 }
 
 .hearts {
-    font-size: 30px;
+    font-size: 34px;
     color: var(--theme-primary);
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.125);
     transition: 0.2s ease;
 }
 
@@ -165,37 +173,35 @@ b {
     transform: translateY(-15px);
 }
 
-#word-skip-button {
-    margin-right: -12px;
-    background: none;
-    font-size: 22px;
-    font-weight: 500;
+#skip-button {
+    padding: 4px 8px;
+    background: var(--theme-bg);
+    font-size: 16px;
+    font-weight: 600;
     font-family: var(--theme-fonts);
-    color: var(--text-dark);
+    color: var(--theme-secondary);
     cursor: pointer;
-    border: none;
+    border: 2px solid var(--theme-secondary);
+    border-radius: 8px;
 }
 
-#word-skip-button:focus {
+#skip-button:focus {
     outline: none;
 }
 
-#word-skip-button:disabled {
-    color: var(--text-disabled);
+#skip-button:disabled {
+    color: var(--theme-dark);
+    border: 2px solid var(--theme-dark);
     cursor: not-allowed;
 }
 
-#word-skip-button > i {
+#skip-button > i {
     vertical-align: top;
     font-size: 28px;
 }
 
 #info-two-player, #player-one-score, #player-two-score {
     display: none;
-}
-
-#category {
-    font-size: 1.5rem;
 }
 
 #player-turn-text {
@@ -240,7 +246,7 @@ b {
     margin: 12px 0;
     background: var(--theme-bg);
     padding: 0 12px;
-    color: #333333d0;
+    color: var(--text-medium-dark);
     text-align: left;
     font-size: 1.25rem;
     font-family: var(--theme-fonts);
@@ -250,7 +256,7 @@ b {
 
 .form-title {
     font-size: 1.75rem;
-    font-weight: 500;
+    font-weight: 600;
     text-align: center;
     margin: 1rem;
 }
@@ -276,11 +282,11 @@ b {
     width: 100%;
 }
 
-#word-holder {
+#word-container {
     margin: 2rem 0;
     color: var(--text-dark);
     font-size: 3rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 8px;
 }
 
@@ -303,11 +309,9 @@ b {
 
 .key-container {
     display: inline-block;
-    margin: 0.4%;
-    height: 11vw;
-    max-height: 70px;
-    width: 6vw;
-    max-width: 45px;
+    margin: 0.333vw;
+    height: 5rem;
+    width: 3rem;
 }
 
 .keys {
@@ -316,9 +320,9 @@ b {
     background: #fff;
     color: var(--text-dark);
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     font-family: var(--theme-fonts);
-    font-weight: 500;
+    font-weight: 600;
     border: none;
     border-radius: 4px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.125);
@@ -353,7 +357,12 @@ b {
     }
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 686px) {
+    .key-container {
+        height: 11.667vw;
+        width: 7vw;
+    }
+
     .keys {
         font-size: 5vw;
     }
