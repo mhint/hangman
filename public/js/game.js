@@ -214,6 +214,7 @@ const Game = {
         resetLives: function () {
             $(".hearts").removeClass("heart-lost")
             $("#skip-button").prop("disabled", false)
+            $("#skip-button-text").html(`<span>SKIP (${(Game.initialLives - 2) / 2})</span>`)
         },
         startGame: function() {
             $("#pvp-button").html("<i class='material-icons'>people_alt</i><span>NEW 2P</span>")
@@ -241,6 +242,7 @@ const Game = {
             $("#category").html("Hint:  ")
         },
         updateLives: function(lives) {
+            const skips = lives > 2 ? Math.floor((lives - 2) / 2) : 0
             let hearts = $(".hearts:not(.heart-lost)").length
             if (lives < hearts) {
                 for (let i = hearts; i > lives; i--) {
@@ -250,7 +252,7 @@ const Game = {
             if (lives <= 2) {
                 $("#skip-button").prop("disabled", true)
             }
-            $("#skip-button-text").html(`<span>SKIP (${Math.floor(lives - 2) / 2})`)
+            $("#skip-button-text").html(`<span>SKIP (${skips})`)
         },
         updateScore: function(player, isPvP) {
             if (!isPvP) {
@@ -309,7 +311,9 @@ const Game = {
         }
     }
 }
+
 const Keys = "abcdefghijklmnopqrstuvwxyz"
+
 for (let i = 0; i < Keys.length; i++) {
     const key = `<div class="key-container"><button type="button" class="keys" id="key-${Keys[i]}" onclick="Game.guessLetter('${Keys[i]}')">${Keys[i].toUpperCase()}</button></div>`
     $("#keyboard").append(key)
@@ -319,6 +323,7 @@ for (let i = 1; i <= Game.initialLives; i++) {
     const heart = `<i class="material-icons hearts" id="heart-${i}">favorite</i>`
     $("#health").append(heart)
 }
+
 $("#skip-button").on("mouseenter", function() {
     if (Game.currentPlayerLives > 2) {
         $(`#heart-${Game.currentPlayerLives}`).addClass("heart-flashing")
@@ -328,5 +333,7 @@ $("#skip-button").on("mouseenter", function() {
     $(`#heart-${Game.currentPlayerLives}`).removeClass("heart-flashing")
     $(`#heart-${Game.currentPlayerLives - 1}`).removeClass("heart-flashing")
 })
+
+$("#skip-button-text").html(`<span>SKIP (${(Game.initialLives - 2) / 2})</span>`)
 
 Game.new()
