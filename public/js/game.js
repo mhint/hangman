@@ -101,7 +101,7 @@ const Game = {
         this.UI.resetLives()
     },
     skipWord: function () {
-        if (this.currentPlayerLives > 2) {
+        if (this.currentPlayerLives > 3) {
             this.currentPlayerGuesses = []
             this.currentPlayerLives -= 2
             this.UI.updateLives(this.currentPlayerLives)
@@ -242,14 +242,14 @@ const Game = {
             $("#category").html("Hint:  ")
         },
         updateLives: function(lives) {
-            const skips = lives > 2 ? Math.floor((lives - 2) / 2) : 0
+            const skips = lives > 3 ? Math.floor((lives - 2) / 2) : 0
             let hearts = $(".hearts:not(.heart-lost)").length
             if (lives < hearts) {
                 for (let i = hearts; i > lives; i--) {
                     $(`#heart-${i}`).addClass("heart-lost").removeClass("heart-flashing")
                 }
             }
-            if (lives <= 2) {
+            if (lives <= 3) {
                 $("#skip-button").prop("disabled", true)
             }
             $("#skip-button-text").html(`<span>SKIP (${skips})`)
@@ -325,11 +325,11 @@ for (let i = 1; i <= Game.initialLives; i++) {
 }
 
 $("#skip-button").on("mouseenter", function() {
-    if (Game.currentPlayerLives > 2) {
+    if (Game.currentPlayerLives > 3) {
         $(`#heart-${Game.currentPlayerLives}`).addClass("heart-flashing")
         $(`#heart-${Game.currentPlayerLives - 1}`).addClass("heart-flashing")
     }
-}).on("mouseleave", function(){
+}).on("mouseleave", function() {
     $(`#heart-${Game.currentPlayerLives}`).removeClass("heart-flashing")
     $(`#heart-${Game.currentPlayerLives - 1}`).removeClass("heart-flashing")
 })
