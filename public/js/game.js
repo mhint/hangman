@@ -326,7 +326,7 @@ for (let i = 0; i < Keys.length; i++) {
     if (Keys[i] == 'm') $('#keyboard').append('<div></div>');
 }
 for (let i = 1; i <= Game.initialLives; i++) {
-    const heart = `<i class='material-icons hearts' id='heart-${i}'>favorite</i>`;
+    const heart = `<i class="material-icons hearts" id="heart-${i}">favorite</i>`;
     $('#health').append(heart);
 }
 
