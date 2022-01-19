@@ -169,7 +169,7 @@ const Game = {
             $(`#key-${key}`).prop('disabled', true);
         },
         disableAllKeys: function () {
-            $(`.keys`).prop('disabled', true).addClass('keyboard-btn-incorrect');
+            $('.keyboard-btn').prop('disabled', true).addClass('keyboard-btn-incorrect');
         },
         displayCategory: function (category, isPvP) {
             if (!isPvP) {
@@ -215,7 +215,7 @@ const Game = {
             $(`#key-${key}`).addClass('keyboard-btn-incorrect');
         },
         resetAllKeys: function () {
-            $(`.keys`).prop('disabled', false).removeClass('keyboard-btn-correct').removeClass('keyboard-btn-incorrect');
+            $('.keyboard-btn').prop('disabled', false).removeClass('keyboard-btn-correct').removeClass('keyboard-btn-incorrect');
         },
         resetLives: function () {
             $('.hearts').removeClass('heart-lost');
