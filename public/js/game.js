@@ -227,7 +227,7 @@ const Game = {
             $('#score').css({ 'display': 'block' });
             $('#score').html('SCORE: 0');
             $('#words-guessed').css({ 'display': 'block' });
-            $('#words-guessed').html('WORDS GUESSED: 0');
+            $('#words-guessed').html('WORDS: 0');
             $('#player-one-score').css({ 'display': 'none' });
             $('#player-two-score').css({ 'display': 'none' });
             $('#category').css({ 'display': 'block' });
@@ -263,7 +263,7 @@ const Game = {
         updateScore: function (player, isPvP) {
             if (!isPvP) {
                 $('#score').html('SCORE: ' + player.score);
-                $('#words-guessed').html('WORDS GUESSED: ' + player.wins);
+                $('#words-guessed').html('WORDS: ' + player.wins);
             } else {
                 if (player.id == 1) {
                     $('#player-one-score').html('PLAYER ONE: ' + player.score);
@@ -318,12 +318,13 @@ const Game = {
     }
 };
 
-const Keys = 'abcdefghijklmnopqrstuvwxyz';
+const Keys = 'qwertyuiopasdfghjklzxcvbnm';
 
 for (let i = 0; i < Keys.length; i++) {
     const key = `<div class="key-container"><button type="button" class="keys" id="key-${Keys[i]}" onclick="Game.guessLetter('${Keys[i]}')">${Keys[i].toUpperCase()}</button></div>`;
     $('#keyboard').append(key);
-    if (Keys[i] == 'm') $('#keyboard').append('<div></div>');
+    if (Keys[i] == 'p') $('#keyboard').append('<div></div>');
+    if (Keys[i] == 'l') $('#keyboard').append('<div></div>');
 }
 for (let i = 1; i <= Game.initialLives; i++) {
     const heart = `<i class="material-icons hearts" id="heart-${i}">favorite</i>`;
