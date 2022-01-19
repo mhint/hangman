@@ -169,7 +169,7 @@ const Game = {
             $(`#key-${key}`).prop('disabled', true);
         },
         disableAllKeys: function () {
-            $(`.keys`).prop('disabled', true).addClass('key-incorrect');
+            $(`.keys`).prop('disabled', true).addClass('keyboard-btn-incorrect');
         },
         displayCategory: function (category, isPvP) {
             if (!isPvP) {
@@ -209,13 +209,13 @@ const Game = {
             }, 1000);
         },
         keyIsCorrect: function (key) {
-            $(`#key-${key}`).addClass('key-correct');
+            $(`#key-${key}`).addClass('keyboard-btn-correct');
         },
         keyIsIncorrect: function (key) {
-            $(`#key-${key}`).addClass('key-incorrect');
+            $(`#key-${key}`).addClass('keyboard-btn-incorrect');
         },
         resetAllKeys: function () {
-            $(`.keys`).prop('disabled', false).removeClass('key-correct').removeClass('key-incorrect');
+            $(`.keys`).prop('disabled', false).removeClass('keyboard-btn-correct').removeClass('keyboard-btn-incorrect');
         },
         resetLives: function () {
             $('.hearts').removeClass('heart-lost');
@@ -318,24 +318,28 @@ const Game = {
     }
 };
 
-const Keys = 'qwertyuiopasdfghjklzxcvbnm';
-
-for (let i = 0; i < Keys.length; i++) {
-    const key = `<div class="key-container"><button type="button" class="keys" id="key-${Keys[i]}" onclick="Game.guessLetter('${Keys[i]}')">${Keys[i].toUpperCase()}</button></div>`;
-    $('#keyboard').append(key);
-    if (Keys[i] == 'p') $('#keyboard').append('<div></div>');
-    if (Keys[i] == 'l') $('#keyboard').append('<div></div>');
+const keyboardRows = ['abcdefghi', 'jklmnopqr', 'stuvwxyz'];
+for (let row of keyboardRows) {
+    const keyboard = $('#keyboard');
+    const rowHtml = `<div class="keyboard-row"></div>`;
+    keyboard.append(rowHtml);
+    for (let key of row) {
+        const keyHtml = `<button type="button" class="keyboard-btn" id="key-${key}" onclick="Game.guessLetter('${key}')">${key}</button>`;
+        $('.keyboard-row').last().append(keyHtml);
+    }
 }
+$('.keyboard-row').last().prepend('<div class="keyboard-spacer"></div>');
+$('.keyboard-row').last().append('<div class="keyboard-spacer"></div>');
+
 for (let i = 1; i <= Game.initialLives; i++) {
     const heart = `<i class="material-icons hearts" id="heart-${i}">favorite</i>`;
     $('#health').append(heart);
 }
 
 $('#skip-button').on('mouseenter', function () {
-    if (Game.currentPlayerLives > 3) {
-        $(`#heart-${Game.currentPlayerLives}`).addClass('heart-flashing');
-        $(`#heart-${Game.currentPlayerLives - 1}`).addClass('heart-flashing');
-    }
+    if (Game.currentPlayerLives <= 3) return;
+    $(`#heart-${Game.currentPlayerLives}`).addClass('heart-flashing');
+    $(`#heart-${Game.currentPlayerLives - 1}`).addClass('heart-flashing');
 }).on('mouseleave', function () {
     $(`#heart-${Game.currentPlayerLives}`).removeClass('heart-flashing');
     $(`#heart-${Game.currentPlayerLives - 1}`).removeClass('heart-flashing');
