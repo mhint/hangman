@@ -327,12 +327,11 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 4px;
-    height: 5rem;
-    width: 3rem;
+    height: 4rem;
     background: var(--theme-bg);
     color: var(--text-dark);
     text-align: center;
-    font-size: 2.25rem;
+    font-size: 2rem;
     font-family: var(--theme-fonts);
     font-weight: 600;
     border: none;
