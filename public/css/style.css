@@ -328,6 +328,7 @@ body {
     align-items: center;
     margin: 0 4px;
     height: 4rem;
+    width: 0;
     background: var(--theme-bg);
     color: var(--text-dark);
     text-align: center;
@@ -368,7 +369,7 @@ body {
     }
 }
 
-@media only screen and (max-width: 534px) {
+@media only screen and (max-width: 556px) {
     #info-container {
         width: 90%;
     }
@@ -383,6 +384,10 @@ body {
 
     #blanks {
         font-size: 2.25rem;
+    }
+
+    .keyboard-btn {
+        font-size: 1rem;
     }
 }
 
