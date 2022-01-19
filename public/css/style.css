@@ -326,7 +326,7 @@ body {
     flex: 1;
     justify-content: center;
     align-items: center;
-    margin: 3px;
+    margin: 0 4px;
     height: 5rem;
     width: 3rem;
     background: var(--theme-bg);
