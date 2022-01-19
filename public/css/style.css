@@ -55,8 +55,7 @@ body {
     flex: none;
     margin: 8px auto 8px auto;
     padding: 0 12px;
-    min-height: 42px;
-    max-height: 42px;
+    height: 42px;
     width: fit-content;
     background: var(--theme-dark);
     font-size: 1.15rem;
@@ -70,7 +69,7 @@ body {
 
 .button > i {
     padding: 7px 0;
-    font-size: 28px;
+    font-size: 1.67rem;
 }
 
 .button > span {
@@ -155,7 +154,7 @@ body {
 }
 
 .hearts {
-    font-size: 34px;
+    font-size: 2.25rem;
     color: var(--theme-primary);
     transition: 0.2s ease;
 }
@@ -176,7 +175,7 @@ body {
 #skip-button {
     padding: 4px 8px;
     background: var(--theme-bg);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     font-family: var(--theme-fonts);
     color: var(--theme-secondary);
@@ -305,7 +304,7 @@ body {
 }
 
 #keyboard {
-    padding: 8px 0;
+    padding: 12px 0;
     background: var(--theme-light);
     text-align: center;
     width: 100%;
@@ -332,7 +331,7 @@ body {
     background: var(--theme-bg);
     color: var(--text-dark);
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: var(--theme-fonts);
     font-weight: 600;
     border: none;
@@ -370,8 +369,28 @@ body {
 }
 
 @media only screen and (max-width: 556px) {
+    .button {
+        font-size: 1rem;
+    }
+
+    .button > i {
+        font-size: 1.5rem;
+    }
+
+    #pvp-button > span {
+        display: none;
+    }
+
+    #score-bar {
+        font-size: 1rem;
+    }
+
     #info-container {
         width: 90%;
+    }
+
+    #banner {
+        height: 6rem;
     }
 
     #category {
@@ -379,7 +398,7 @@ body {
     }
 
     .heart {
-        font-size: 26px;
+        font-size: 2rem;
     }
 
     #blanks {
