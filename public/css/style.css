@@ -304,10 +304,10 @@ body {
 }
 
 #keyboard {
-    padding: 12px 0;
+    padding: 12px 8px;
     background: var(--theme-light);
     text-align: center;
-    width: 100%;
+    width: calc(100% - 16px);
 }
 
 .keyboard-row {
@@ -326,7 +326,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 4px;
-    height: 4rem;
+    height: 3.67rem;
     width: 0;
     background: var(--theme-bg);
     color: var(--text-dark);
