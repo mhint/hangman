@@ -1,3 +1,3 @@
 # Hangman
-Hangman was the first HTML/JavaScript project I created in late 2017. The script and stylesheet have since been refined and updated.
-Play it [here](https://mhint.github.io/html-hangman/public/index.html).
+Hangman was my first HTML/JS project, which I started in 2017 and updated as I progressed with JavaScript, HTML and CSS.
+Here is the link to the game on [GitHub Pages](https://mhint.github.io/hangman/public/index.html).
