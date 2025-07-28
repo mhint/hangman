@@ -258,7 +258,7 @@ const Game = {
             if (lives <= 3) {
                 $('#skip-button').prop('disabled', true);
             }
-            $('#skip-button-text').html(`<span>SKIP (${skips})`);
+            $('#skip-button-text').html(skips === 0 ? '<span>SKIP</span>' : `<span>SKIP (${skips})`);
         },
         updateScore: function (player, isPvP) {
             if (!isPvP) {
@@ -336,12 +336,7 @@ for (let i = 1; i <= Game.initialLives; i++) {
     $('#health').append(heart);
 }
 
-const value = (Game.initialLives - 2) / 2;
-$('#skip-button-text').html(
-  value === 0
-    ? '<span>SKIP</span>'
-    : `<span>SKIP ${value < 0 ? value : `(${value})`}</span>`
-);
+$('#skip-button-text').html(<span>SKIP (${(Game.initialLives - 2) / 2})</span>);
 $('#skip-button').on('mouseenter', function () {
     if (Game.currentPlayerLives <= 3) return;
     $(`#heart-${Game.currentPlayerLives}`).addClass('heart-flashing');
