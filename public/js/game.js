@@ -336,6 +336,12 @@ for (let i = 1; i <= Game.initialLives; i++) {
     $('#health').append(heart);
 }
 
+const value = (Game.initialLives - 2) / 2;
+$('#skip-button-text').html(
+  value === 0
+    ? '<span>SKIP</span>'
+    : `<span>SKIP ${value < 0 ? value : `(${value})`}</span>`
+);
 $('#skip-button').on('mouseenter', function () {
     if (Game.currentPlayerLives <= 3) return;
     $(`#heart-${Game.currentPlayerLives}`).addClass('heart-flashing');
@@ -344,7 +350,5 @@ $('#skip-button').on('mouseenter', function () {
     $(`#heart-${Game.currentPlayerLives}`).removeClass('heart-flashing');
     $(`#heart-${Game.currentPlayerLives - 1}`).removeClass('heart-flashing');
 });
-
-$('#skip-button-text').html(`<span>SKIP (${(Game.initialLives - 2) / 2})</span>`);
 
 Game.new();
