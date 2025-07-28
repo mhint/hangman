@@ -336,7 +336,7 @@ for (let i = 1; i <= Game.initialLives; i++) {
     $('#health').append(heart);
 }
 
-$('#skip-button-text').html(<span>SKIP (${(Game.initialLives - 2) / 2})</span>);
+$('#skip-button-text').html(`<span>SKIP (${(Game.initialLives - 2) / 2})</span>`);
 $('#skip-button').on('mouseenter', function () {
     if (Game.currentPlayerLives <= 3) return;
     $(`#heart-${Game.currentPlayerLives}`).addClass('heart-flashing');
